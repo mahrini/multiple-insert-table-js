@@ -106,19 +106,20 @@
                                 <div class="form-row">
                                     <div class="col-md-12">
                                         <label>Harga</label>
-                                        <input type="text" name="harga" class="form-control">
+                                        <input type="text" name="harga" id="harga" class="form-control">
                                     </div>
                                 </div>
                                 <div class="form-row">
                                     <div class="col-md-12">
                                         <label>Qty</label>
-                                        <input type="text" name="qty" class="form-control">
+                                        <input type="text" name="qty"
+                                        id="qty" class="form-control">
                                     </div>
                                 </div>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary">Save changes</button>
+                                <button type="button" class="btn btn-primary" onclick="add();" data-dismiss="modal" id="save" >Save changes</button>
                             </div>
                         </div>
                     </div>            
@@ -128,7 +129,7 @@
     </div>
     &nbsp;
     <div class="card" style="width:60%;margin:0px auto;">
-        <table class="table table-bordered text-center" style="width:80%;margin:0px auto;margin-top:10px;margin-bottom:10px;">
+        <table id="table" class="table table-bordered text-center" style="width:80%;margin:0px auto;margin-top:10px;margin-bottom:10px;">
             <thead>
                 <tr>
                     <th>No</th>
@@ -140,14 +141,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td><button class="btn btn-danger">[-]Barang</button></td>
-                </tr>
+                
             </tbody>
         </table>
         <div class="form-inline" style="padding-left:405px;padding-bottom:10px;padding-top:30px;">
@@ -155,7 +149,11 @@
             <input type="text" class="form-control" value="Rp.120.000" readonly style="width:50%;height:50px;font-size:20pt;text-align:right;">
         </div>
         <div style="padding-left:666px;padding-bottom:10px;">
-            <button class="btn btn-primary" style="postition:relative;">Bayar</button>
+        <!-- Result -->
+        <form action="read.php" method="POST">
+        <input id="text" type="hidden" name="result" class="form-control">
+            <button class="btn btn-primary" style="postition:relative;" type="submit">Bayar</button>
+        </form>
         </div>
     </div>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
