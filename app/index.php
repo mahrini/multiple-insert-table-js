@@ -31,8 +31,10 @@
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
+        <form action="read.php" method="POST">
+
                         <label>No.Nota</label>
-                        <input type="text" placeholder="No.Nota" class="form-control"/>
+                        <input type="text" placeholder="No.Nota" class="form-control" name="noNota"/>
                     </div>
                 </div>
                 <div class="col-md-2">
@@ -71,7 +73,7 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label>Tanggal</label>
-                        <input type="date" class="form-control"/>
+                        <input type="date" class="form-control" name="tanggal"/>
                     </div>
                 </div>
                 <div class="col-md-2">
@@ -150,7 +152,6 @@
         </div>
         <div style="padding-left:666px;padding-bottom:10px;">
         <!-- Result -->
-        <form action="read.php" method="POST">
         <input id="text" type="hidden" name="result" class="form-control">
             <button class="btn btn-primary" style="postition:relative;" type="submit">Bayar</button>
         </form>

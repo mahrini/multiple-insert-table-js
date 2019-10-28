@@ -23,7 +23,7 @@ class barangORM extends Model {
     }
 }
 class detailTrxORM extends Model {
-    public static $_table = 'detailTrx';
+    public static $_table = 'detail_trx';
 
     public function trx(){
         return $this->belongs_to('trxORM');
