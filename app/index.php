@@ -77,7 +77,51 @@
                 <div class="col-md-2">
                 </div>
                 <div class="col-md-4" style="padding-top:27px;">
-                    <button style="float:right;" class="btn btn-primary">[+] Barang</button>
+                    <button type="button" data-toggle="modal" style="float:right;" class="btn btn-primary" data-target="#exampleModal">[+] Barang</button>
+                </div>
+                <!-- Modal -->
+                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Data Order</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-row">
+                                    <div class="col-md-12">
+                                        <label>Barang</label>
+                                            <select name="barang" id="barang" class="form-control">
+                                            <?php
+                                                $list = barangORM::find_many();
+                                                foreach($list as $brg):
+                                            ?>
+                                                <option value="<?= $brg->id;?>"><?= $brg->nama;?></option>
+                                                <?php endforeach;?>
+                                            </select>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="col-md-12">
+                                        <label>Harga</label>
+                                        <input type="text" name="harga" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="col-md-12">
+                                        <label>Qty</label>
+                                        <input type="text" name="qty" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary">Save changes</button>
+                            </div>
+                        </div>
+                    </div>            
                 </div>
             </div>
         </div>
@@ -97,11 +141,11 @@
             </thead>
             <tbody>
                 <tr>
-                    <td>1</td>
-                    <td>Parfume Romano</td>
-                    <td>3</td>
-                    <td>Rp. 10.000</td>
-                    <td>RP. 30.000</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
                     <td><button class="btn btn-danger">[-]Barang</button></td>
                 </tr>
             </tbody>
@@ -122,6 +166,10 @@
 $(document).ready(()=>{
     $('select').select2({
         theme:'bootstrap4',
+    });
+    $('#barang').select2({
+        theme:'bootstrap4',
+        dropdownParent: $('#exampleModal'),        
     });
 })
 </script>
