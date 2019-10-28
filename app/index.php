@@ -146,7 +146,7 @@
         </table>
         <div class="form-inline" style="padding-left:405px;padding-bottom:10px;padding-top:30px;">
             <label style="font-size:20pt;">Subtotal : &nbsp;</label>
-            <input type="text" class="form-control" value="Rp.120.000" readonly style="width:50%;height:50px;font-size:20pt;text-align:right;">
+            <input id="subtotal" type="text" class="form-control" readonly style="width:50%;height:50px;font-size:20pt;text-align:right;">
         </div>
         <div style="padding-left:666px;padding-bottom:10px;">
         <!-- Result -->

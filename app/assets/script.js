@@ -8,9 +8,12 @@ function add()
         cell4 = newRow.insertCell(3),
         cell5 = newRow.insertCell(4),
         cell6 = newRow.insertCell(5),
-        barang = document.getElementById('barang').value,
+        barang = $('#barang :selected').text(),
         harga = document.getElementById('harga').value,
         qty = document.getElementById('qty').value;
+    
+    idBrg = document.getElementById('barang').value;
+
 
     let button = document.createElement('button');
     button.type="Submit";
@@ -21,18 +24,28 @@ function add()
     let nomor = document.getElementById('table').getElementsByTagName("tr").length;
     
     total = qty * harga;
-    
     cell1.innerHTML = nomor-1;
     cell2.innerHTML = barang;
     cell3.innerHTML = qty;
     cell4.innerHTML = harga;
     cell5.innerHTML = total;
     cell6.appendChild(button);
+    // Subtotal
+    let subTotal = $('#table td:nth-child(5)').map(function(){
+        return parseInt($(this).text());
+    }).get();
+    // Get Subtotal
+    let hasil = (a,b) => a+b;
+    let jumlah = subTotal.reduce(hasil);
+    // Reset
+    $('#harga').val('');
+    $('#qty').val('');
+    $('#subtotal').val(jumlah);
 }
 $('#save').click(function() {
     let data = $('table tr:gt(0)').map(function() {
         return {
-            idBarang:$(this.cells[1]).text(),
+            idBarang:idBrg,
             qty:$(this.cells[2]).text(),
             harga:$(this.cells[3]).text(),
         };
