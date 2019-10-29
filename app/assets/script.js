@@ -1,3 +1,31 @@
+var rp = document.getElementById('harga');
+		rp.addEventListener('keyup', function(e){
+
+            rp.value = formatRupiah(this.value, 'Rp. ');
+		}); 
+		/* Fungsi formatRupiah */
+		function formatRupiah(angka, prefix){
+			var number_string = angka.replace(/[^,\d]/g, '').toString(),
+			split   		= number_string.split(','),
+			sisa     		= split[0].length % 3,
+			rp     		= split[0].substr(0, sisa),
+			ribuan     		= split[0].substr(sisa).match(/\d{3}/gi);
+ 
+			if(ribuan){
+				separator = sisa ? '.' : '';
+				rp += separator + ribuan.join('.');
+			}
+ 
+			rp = split[1] != undefined ? rp + ',' + split[1] : rp;
+			return prefix == undefined ? rp : (rp ? 'Rp. ' + rp : '');
+		}
+function rupiah(number)
+{
+    let reverse = number.toString().split('').reverse().join(''),
+        ribuan = reverse.match(/\d{1,3}/g);
+        ribuan = ribuan.join('.').split('').reverse().join('');
+        return 'Rp.' + ribuan;
+}
 function add()
 {   
     let table = document.getElementById('table'),
@@ -22,25 +50,30 @@ function add()
     button.setAttribute('class', 'btn btn-danger');
     
     let nomor = document.getElementById('table').getElementsByTagName("tr").length;
-    
-    total = qty * harga;
     cell1.innerHTML = nomor-1;
     cell2.innerHTML = barang;
     cell3.innerHTML = qty;
     cell4.innerHTML = harga;
-    cell5.innerHTML = total;
+    harga = harga.replace(/\D/g, '');
+    
+    // convert string to int 
+
+    total = qty * parseInt(harga);
+    cell5.innerHTML = rupiah(total) ;
     cell6.appendChild(button);
     // Subtotal
-    let subTotal = $('#table td:nth-child(5)').map(function(){
-        return parseInt($(this).text());
+    subTotal = $('#table td:nth-child(5)').map(function(){
+        st = $(this).text();
+        st = st.replace(/\D/g, '');
+        return parseInt(st);
     }).get();
     // Get Subtotal
-    let hasil = (a,b) => a+b;
-    let jumlah = subTotal.reduce(hasil);
+    hasil = (a,b) => a+b;
+    jumlah = subTotal.reduce(hasil);
     // Reset
     $('#harga').val('');
     $('#qty').val('');
-    $('#subtotal').val(jumlah);
+    $('#subtotal').val(rupiah(jumlah));
 }
 $('#save').click(function() {
     let data = $('table tr:gt(0)').map(function() {
