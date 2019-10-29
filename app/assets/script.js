@@ -46,8 +46,9 @@ function add()
     let button = document.createElement('button');
     button.type="Submit";
     button.innerHTML = "[-]Remove";
-    button.setAttribute('onclick', 'remove(this)');
+    button.setAttribute('onclick', "return confirm('Ya?')?remove(this):'';");
     button.setAttribute('class', 'btn btn-danger');
+    button.setAttribute('id', 'hapus');
     
     let nomor = document.getElementById('table').getElementsByTagName("tr").length;
     cell1.innerHTML = nomor-1;
@@ -73,6 +74,7 @@ function add()
     // Reset
     $('#harga').val('');
     $('#qty').val('');
+    
     $('#subtotal').val(rupiah(jumlah));
 }
 $('#save').click(function() {
@@ -92,3 +94,6 @@ function remove(r)
     let i = r.parentNode.parentNode.rowIndex;
     document.getElementById('table').deleteRow(i);
 }
+$('#hapus').click(function() {
+    return confirm("Yakin ?");
+})
