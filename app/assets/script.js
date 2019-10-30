@@ -1,12 +1,3 @@
-function remove(r)
-{
-    let i = r.parentNode.parentNode.rowIndex;
-    document.getElementById('table').deleteRow(i);
-}
-$('#hapus').click(function() {
-    return confirm("Yakin ?");
-})
-
 // Rupiah
 
 var rp = document.getElementById('harga');
@@ -61,7 +52,7 @@ function add()
     button.setAttribute('class', 'btn btn-danger');
     button.setAttribute('id', 'hapus');
     
-    let nomor = document.getElementById('table').getElementsByTagName("tr").length;
+    let nomor = table.getElementsByTagName("tr").length;
     cell1.innerHTML = nomor-1;
     cell2.innerHTML = barang;
     cell3.innerHTML = qty;
@@ -104,3 +95,28 @@ $('#save').click(function() {
     r = JSON.stringify(data);
     document.getElementById('text').value = r;
 });
+function remove(r)
+{    
+    let i = r.parentNode.parentNode.rowIndex;
+    document.getElementById('table').deleteRow(i);
+    subTotal = $('#table td:nth-child(5)').map(function(){
+        st = $(this).text();
+        st = st.replace(/\D/g, '');
+        return parseInt(st);
+    }).get();
+
+    // Get Subtotal
+    let no = document.getElementById('table').getElementsByTagName('tr').length;
+    if(no < 2) {
+        $('#subtotal').val("Rp.0");    
+    }
+    try {
+        hasil = (a,b) => a+b;
+        jumlah = subTotal.reduce(hasil);
+        $('#subtotal').val(rupiah(jumlah));
+    } catch(e) {
+                
+    }
+    // Reset
+    
+}

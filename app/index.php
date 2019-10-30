@@ -30,8 +30,10 @@
             if(isset($_GET['msg']))
             {
                 if($_GET['msg'] == 'sukses')
-                {
+                {   
                     echo "<div class='alert alert-success'>Sukses</div>";
+                } else {
+                    echo "<div class='alert alert-danger'>Gagal</div>";
                 }
             }
             ?>
