@@ -1,3 +1,14 @@
+function remove(r)
+{
+    let i = r.parentNode.parentNode.rowIndex;
+    document.getElementById('table').deleteRow(i);
+}
+$('#hapus').click(function() {
+    return confirm("Yakin ?");
+})
+
+// Rupiah
+
 var rp = document.getElementById('harga');
 		rp.addEventListener('keyup', function(e){
 
@@ -79,21 +90,17 @@ function add()
 }
 $('#save').click(function() {
     let data = $('table tr:gt(0)').map(function() {
+        // Harga / Brg
+        let harga = $(this.cells[3]).text();
+        harga = harga.replace(/\D/g, '');
+        hargaBrg = parseInt(harga);
+        
         return {
             idBarang:idBrg,
             qty:$(this.cells[2]).text(),
-            harga:$(this.cells[3]).text(),
+            harga:hargaBrg,
         };
     }).get();
     r = JSON.stringify(data);
     document.getElementById('text').value = r;
 });
-
-function remove(r)
-{
-    let i = r.parentNode.parentNode.rowIndex;
-    document.getElementById('table').deleteRow(i);
-}
-$('#hapus').click(function() {
-    return confirm("Yakin ?");
-})

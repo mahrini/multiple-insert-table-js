@@ -16,5 +16,9 @@ foreach($r as $d) {
     $dtl->trx_id = $trxId;
     $dtl->barang_id = $d['idBarang'];
     $dtl->qty = $d['qty'];
+    $dtl->harga = $d['harga'];
     $dtl->save();
+}
+{
+    header('location:index.php?msg=sukses');
 }

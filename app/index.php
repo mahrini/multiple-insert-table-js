@@ -26,6 +26,15 @@
             <h2>Transaksi Pembelian</h2>
         </div>
         <div class="card-body">
+        <?php
+            if(isset($_GET['msg']))
+            {
+                if($_GET['msg'] == 'sukses')
+                {
+                    echo "<div class='alert alert-success'>Sukses</div>";
+                }
+            }
+            ?>
             <div class="row">
                 <div class="col-md-1">
 
@@ -33,7 +42,6 @@
                 <div class="col-md-4">
                     <div class="form-group">
         <form action="read.php" method="POST">
-
                         <label>No.Nota</label>
                         <input type="text" placeholder="No.Nota" class="form-control" name="noNota"/>
                     </div>
