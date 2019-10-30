@@ -7,12 +7,15 @@ class trxORM extends Model {
     public function detail(){
         return $this->has_many('detailTrxORM');
     }
+    public function supplier(){
+        return $this->belongs_to('supplierORM');
+    }
 }
 class supplierORM extends Model {
     public static $_table = 'supplier';
 
-    public function detail(){
-        return $this->has_many('detailTrxORM');
+    public function trx(){
+        return $this->has_one('trxORM');
     }
 }
 class barangORM extends Model {
@@ -27,9 +30,6 @@ class detailTrxORM extends Model {
 
     public function trx(){
         return $this->belongs_to('trxORM');
-    }
-    public function supplier(){
-        return $this->belongs_to('supplierORM');
     }
     public function barang(){
         return $this->belongs_to('barangORM');
