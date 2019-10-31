@@ -1,5 +1,4 @@
-// Rupiah
-
+// Untuk pada saat mengisi form akan otomatis menjadi format rupiah 
 var rp = document.getElementById('harga');
 		rp.addEventListener('keyup', function(e){
 
@@ -20,7 +19,9 @@ var rp = document.getElementById('harga');
  
 			rp = split[1] != undefined ? rp + ',' + split[1] : rp;
 			return prefix == undefined ? rp : (rp ? 'Rp. ' + rp : '');
-		}
+        }
+
+// Mengubah Format angka menjadi rupiah ( bukan pada form )
 function rupiah(number)
 {
     let reverse = number.toString().split('').reverse().join(''),
@@ -28,8 +29,16 @@ function rupiah(number)
         ribuan = ribuan.join('.').split('').reverse().join('');
         return 'Rp.' + ribuan;
 }
+
+// fungsi ini yang di panggil ketika menekan tombol tambah
+
 function add()
 {   
+    /* 
+        new Row = itu adalah baris dari table
+        cell1 = untuk mengetahui ada berapa banyak kolom ada dan 
+        yang kita pake
+    */
     let table = document.getElementById('table'),
         newRow = table.insertRow(table.length),
         cell1 = newRow.insertCell(0),
@@ -38,47 +47,62 @@ function add()
         cell4 = newRow.insertCell(3),
         cell5 = newRow.insertCell(4),
         cell6 = newRow.insertCell(5),
+        
+        // Mengambil Value dari setiap form yan di isi
+
         barang = $('#barang :selected').text(),
         harga = document.getElementById('harga').value,
         qty = document.getElementById('qty').value;
     
+        // Mengambil ID Barang utk di POST ke Database
     idBrg = document.getElementById('barang').value;
 
-
+    // Membuat button baru yaitu button remove pada saat menambahkan record baru
     let button = document.createElement('button');
     button.type="Submit";
     button.innerHTML = "[-]Remove";
-    button.setAttribute('onclick', "return confirm('Ya?')?remove(this):'';");
+    // Ini Merupakan Atribut2 dari button tersebut
+    button.setAttribute('onclick', "return confirm('Ya?')?remove(this):'';"); // disini kita memanggil fungsi remove yang ada dibawah
     button.setAttribute('class', 'btn btn-danger');
     button.setAttribute('id', 'hapus');
     
+    // mengambil banyak nya row yang ada di dalam table 
+    // Untuk dijadikan sebagia nomer urut
     let nomor = table.getElementsByTagName("tr").length;
     cell1.innerHTML = nomor-1;
     cell2.innerHTML = barang;
     cell3.innerHTML = qty;
     cell4.innerHTML = harga;
-    harga = harga.replace(/\D/g, '');
+    harga = harga.replace(/\D/g, ''); //Hanya Mengambil Angkanya saja
     
     // convert string to int 
 
-    total = qty * parseInt(harga);
+    total = qty * parseInt(harga); //lalu di conver ke interger karena data yang td masih berupa string
     cell5.innerHTML = rupiah(total) ;
     cell6.appendChild(button);
-    // Subtotal
+    // Subtotal untuk mendapatkan sub total
+    // Mengambil column ke 5 beserta isi2 nya lalu di tampung menjadi satu
     subTotal = $('#table td:nth-child(5)').map(function(){
         st = $(this).text();
         st = st.replace(/\D/g, '');
         return parseInt(st);
     }).get();
-    // Get Subtotal
+    // Lalu hasil dari yan di tampung tadi di jumlahkan
     hasil = (a,b) => a+b;
     jumlah = subTotal.reduce(hasil);
-    // Reset
+    // Reset value ketika tambah barang baru
     $('#harga').val('');
     $('#qty').val('');
-    
+    // Mengisi value dari subTotal
     $('#subtotal').val(rupiah(jumlah));
 }
+/* 
+    Ketika tombol save di click
+    maka kita akan mengambil nilai dari
+    table dari baris pertama,yang kita ambil hanya
+    idBarang,qty,dan harga
+    lalu semua itu dijadikan format json. 
+*/
 $('#save').click(function() {
     let data = $('table tr:gt(0)').map(function() {
         // Harga / Brg
@@ -93,10 +117,13 @@ $('#save').click(function() {
         };
     }).get();
     r = JSON.stringify(data);
-    document.getElementById('text').value = r;
+    document.getElementById('text').value = r; // data json tadi di passing ke form hidden yang ada di tampilan
 });
 function remove(r)
-{    
+{   
+    // Sama seperti diatas ini merupakan perhitungan
+    // cmn ini perhitungan ketika tombol remove di tekan
+
     let i = r.parentNode.parentNode.rowIndex;
     document.getElementById('table').deleteRow(i);
     subTotal = $('#table td:nth-child(5)').map(function(){
@@ -107,9 +134,16 @@ function remove(r)
 
     // Get Subtotal
     let no = document.getElementById('table').getElementsByTagName('tr').length;
+    // Menghitung baris dari table
+    // Ketika barisnya kurang dari 2
+    // karena 1 bari itu adalah header nya
+    // maka set subtotal nya menjadi RP.0
     if(no < 2) {
         $('#subtotal').val("Rp.0");    
     }
+    // untuk mengabaikan error yan ada
+    // karena disini terdapat TypeError
+    // Jadi diabaikan dengan menggunakan try & catch
     try {
         hasil = (a,b) => a+b;
         jumlah = subTotal.reduce(hasil);
